@@ -24,14 +24,18 @@ require(['wave'], function(wave) {
 
     var boardWidth = 160;
     var boardHeight = 160;
-    var padding = 50;
+    var padding = 60;
+    var margin = 40;
     var titleLineHeight = 30;
-    var itemWidth = boardWidth + padding * 2;
-    var itemHeight = boardHeight + padding * 2 + titleLineHeight;
+    var barLineHeight = 30;
+    var itemWidth = boardWidth + padding * 2 + margin * 2;
+    var itemHeight = boardHeight + padding * 2 + margin * 2 + titleLineHeight + barLineHeight;
     var canvas = document.getElementById('canvas');
     var map = wave.getMap();
     var total = 0;
+    var easeNames = [];
     for (var name in map) {
+        easeNames.push(name);
         total++;
     }
     var width = document.body.offsetWidth - 20;
@@ -44,14 +48,14 @@ require(['wave'], function(wave) {
     ctx.strokeStyle = '#336699';
     ctx.fillStyle = '#336699';
     ctx.font = '20px Arial';
-    var index = 0;
-    for (var name in map) {
+    for (var i = 0; i < easeNames.length; i++) {
+        var name = easeNames[i];
         var easing = map[name];
-        var topIndex = parseInt(index / itemPerRow, 10);
-        var leftIndex = index % itemPerRow;
-        var left = leftIndex * itemWidth + padding;
-        var top = topIndex * itemHeight + padding + titleLineHeight;
-        ctx.fillText(name, left, top - titleLineHeight / 2);
+        var topIndex = parseInt(i / itemPerRow, 10);
+        var leftIndex = i % itemPerRow;
+        var left = leftIndex * itemWidth + padding + margin;
+        var top = topIndex * itemHeight + padding + margin + titleLineHeight;
+        ctx.fillText(name, left, top - padding);
         ctx.beginPath();
         ctx.moveTo(left, top + boardHeight);
         for (var x = 0; x <= 100; x++) {
@@ -59,8 +63,42 @@ require(['wave'], function(wave) {
             ctx.lineTo(left + x * (boardWidth / 100), top + boardHeight - y * boardHeight);
         }
         ctx.stroke();
-        index++;
     }
+
+    var duration = 2000;
+    var direction = true;
+    function render(p) {
+        for (var i = 0; i < easeNames.length; i++) {
+            var name = easeNames[i];
+            var easing = map[name];
+            var topIndex = parseInt(i / itemPerRow, 10);
+            var leftIndex = i % itemPerRow;
+            var left = leftIndex * itemWidth + padding + margin;
+            var top = topIndex * itemHeight + padding + margin + titleLineHeight;
+            // clear more area
+            ctx.clearRect(left - padding, top + boardHeight + padding, boardWidth + 2 * padding, barLineHeight);
+            ctx.fillStyle = '#336699';
+            ctx.fillRect(left + easing(p) * (boardWidth - barLineHeight), top + boardHeight + padding, barLineHeight, barLineHeight);
+        }
+    }
+    function animation() {
+        var start = Date.now();
+        function run() {
+            var p = (Date.now() - start) / duration;
+            if (p > 1) {
+                render(1);
+                direction = !direction;
+                start = Date.now();
+                requestAnimationFrame(run);
+            }
+            else {
+                render(p);
+                requestAnimationFrame(run);
+            }
+        }
+        run();
+    }
+    animation();
 });
 </script>
 </body>

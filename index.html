@@ -3,10 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <title>Wave - The Javascript animation easing functions.</title>
+    <script type="text/javascript" src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+    <style type="text/css">
+    body {padding:0;margin:0;}
+    </style>
 </head>
 <body>
-    <script src="src/wave.js"></script>
-    <script src="src/util.js"></script>
-    <script src="src/easing.js"></script>
+<canvas id="canvas">浏览器不支持 canvas 标签</canvas>
+<script type="text/javascript">
+require.config({
+    baseUrl: 'src'
+});
+require(['wave'], function(wave) {
+    // usage:
+    // wave('easeInCubic');
+    // wave('ease-in');
+    // wave([0, 1]);
+    // wave([.54, .15, .42, .83]);
+    // wave.register('fast-in', function(x) {});
+
+    var boardWidth = 160;
+    var boardHeight = 160;
+    var padding = 50;
+    var titleLineHeight = 30;
+    var itemWidth = boardWidth + padding * 2;
+    var itemHeight = boardHeight + padding * 2 + titleLineHeight;
+    var canvas = document.getElementById('canvas');
+    var map = wave.getMap();
+    var total = 0;
+    for (var name in map) {
+        total++;
+    }
+    var width = document.body.offsetWidth - 20;
+    canvas.width = width;
+    var itemPerRow = parseInt(width / itemWidth, 10);
+    var height = itemHeight * Math.ceil(total / itemPerRow);
+    canvas.height = height;
+
+    var ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#336699';
+    ctx.fillStyle = '#336699';
+    ctx.font = '20px Arial';
+    var index = 0;
+    for (var name in map) {
+        var easing = map[name];
+        var topIndex = parseInt(index / itemPerRow, 10);
+        var leftIndex = index % itemPerRow;
+        var left = leftIndex * itemWidth + padding;
+        var top = topIndex * itemHeight + padding + titleLineHeight;
+        ctx.fillText(name, left, top - titleLineHeight / 2);
+        ctx.beginPath();
+        ctx.moveTo(left, top + boardHeight);
+        for (var x = 0; x <= 100; x++) {
+            var y = easing(x / 100);
+            ctx.lineTo(left + x * (boardWidth / 100), top + boardHeight - y * boardHeight);
+        }
+        ctx.stroke();
+        index++;
+    }
+});
+</script>
 </body>
 </html>

@@ -1,0 +1,28 @@
+{
+  "name": "wave",
+  "version": "1.0.0",
+  "description": "Timing Function for Animation",
+  "main": "index.js",
+  "dependencies": {
+    "amdclean": "^2.2.5",
+    "edp-build": "^1.0.14"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "build": "node build.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/branding-fe/wave.git"
+  },
+  "keywords": [
+    "timing",
+    "function"
+  ],
+  "author": "zmmbreeze,osdream",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/branding-fe/wave/issues"
+  },
+  "homepage": "https://github.com/branding-fe/wave"
+}

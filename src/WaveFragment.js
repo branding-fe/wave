@@ -15,14 +15,14 @@
  */
 
 define(function(require) {
-    return {
+    var easeInCurves = {
         /**
          * Math.pow(p, 2).
          * http://jsperf.com/math-pow-vs-simple-multiplication
          * @param {number} percent
          * @return {number} new percent value.
          */
-        Quad: function (p) {
+        'Quad': function (p) {
             return p * p;
         },
         /**
@@ -30,7 +30,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        Cubic: function (p) {
+        'Cubic': function (p) {
             return p * p * p;
         },
         /**
@@ -38,7 +38,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        Quart: function (p) {
+        'Quart': function (p) {
             return p * p * p * p;
         },
         /**
@@ -46,7 +46,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        Qunit: function (p) {
+        'Qunit': function (p) {
             return p * p * p * p * p;
         },
         /**
@@ -54,7 +54,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        Expo: function (p) {
+        'Expo': function (p) {
             return p * p * p * p * p * p;
         },
         /**
@@ -62,7 +62,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        Sine: function (p) {
+        'Sine': function (p) {
             return 1 - Math.cos(p * Math.PI / 2);
         },
         /**
@@ -70,7 +70,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        Circ: function (p) {
+        'Circ': function (p) {
             return 1 - Math.sqrt(1 - p * p);
         },
         /**
@@ -78,7 +78,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        Back: function (p) {
+        'Back': function (p) {
             return p * p * (3 * p - 2);
         },
         /**
@@ -86,7 +86,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        Elastic: function (p) {
+        'Elastic': function (p) {
             return p === 0 || p === 1 ? p :
                 -Math.pow(2, 8 * (p - 1)) * Math.sin(((p - 1) * 80 - 7.5) * Math.PI / 15);
         },
@@ -95,13 +95,28 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        Bounce: function (p) {
+        'Bounce': function (p) {
             var pow2;
             var bounce = 4;
 
             while (p < ((pow2 = Math.pow(2, --bounce)) - 1) / 11) {}
             return 1 / Math.pow(4, 3 - bounce) - 7.5625 * Math.pow((pow2 * 3 - 2) / 22 - p, 2);
         }
+    };
+
+    var Bezier = require('./Bezier');
+    var fastInCurves = {
+        'B2ToLinear': (function() {
+            var easing = new Bezier(0, 0.4, 0.2, 0.4, 0.4, 0.55).getEasing();
+            return function(p) {
+                return easing(p);
+            }
+        })()
+    };
+
+    return {
+        'easeInCurves': easeInCurves,
+        'fastInCurves': fastInCurves
     };
 });
 

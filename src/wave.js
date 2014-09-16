@@ -23,7 +23,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        linear: function (p) {
+        'linear': function (p) {
             return p;
         },
 
@@ -32,7 +32,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        none: function (p) {
+        'none': function (p) {
             return 0;
         },
 
@@ -41,7 +41,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        full: function (p) {
+        'full': function (p) {
             return 1;
         },
 
@@ -50,7 +50,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        reverse: function (p) {
+        'reverse': function (p) {
             return 1 - p;
         },
 
@@ -60,7 +60,7 @@ define(function(require) {
          * @param {number} percent
          * @return {number} new percent value.
          */
-        swing: function (p) {
+        'swing': function (p) {
             return 0.5 - Math.cos(p * Math.PI) / 2;
         },
 
@@ -68,7 +68,7 @@ define(function(require) {
          * spring easing
          * @param {number} p percent
          */
-        spring: function(p) {
+        'spring': function(p) {
             return 1 - (Math.cos(p * 4.5 * Math.PI) * Math.exp(-p * 6));
         }
     };
@@ -76,11 +76,22 @@ define(function(require) {
     // build easing using WaveFragment
     var WaveFragment = require('./WaveFragment');
     var util = require('./util');
-    for (var name in WaveFragment) {
-        Easings['easeIn' + name] = WaveFragment[name];
-        Easings['easeOut' + name] = util.reverse(WaveFragment[name]);
-        Easings['easeInOut' + name] = util.reflect(WaveFragment[name]);
-        Easings['easeOutIn' + name] = util.reflect(util.reverse(WaveFragment[name]));
+    var easeInCurves = WaveFragment['easeInCurves'];
+    for (var name in easeInCurves) {
+        var fragment = easeInCurves[name];
+        Easings['easeIn' + name] = fragment;
+        Easings['easeOut' + name] = util.reverse(fragment);
+        Easings['easeInOut' + name] = util.reflect(fragment);
+        Easings['easeOutIn' + name] = util.reflect(util.reverse(fragment));
+    }
+
+    var fastInCurves = WaveFragment['fastInCurves'];
+    for (var name in fastInCurves) {
+        var fragment = fastInCurves[name];
+        Easings['fastIn' + name] = fragment;
+        Easings['fastOut' + name] = util.reverse(fragment);
+        Easings['fastInOut' + name] = util.reflect(fragment);
+        Easings['fastOutIn' + name] = util.reflect(util.reverse(fragment));
     }
 
     // build easing using Bezier

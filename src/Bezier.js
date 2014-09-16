@@ -104,7 +104,7 @@ define(function(require) {
      * 一些常量
      * @type {Object.<string, number>}
      */
-    Bezier.const = {
+    Bezier.consts = {
         NEWTON_ITERATIONS: 4,
         NEWTON_MIN_SLOPE: 0.001,
         SUBDIVISION_PRECISION: 0.0000001,
@@ -149,7 +149,7 @@ define(function(require) {
         // 计算斜率
         var derivative = this.getDerivativeFromT(tPossible);
         // 斜率较大时使用牛顿拉普生迭代逼近
-        if (derivative.x >= Bezier.const.NEWTON_MIN_SLOPE) {
+        if (derivative.x >= Bezier.consts.NEWTON_MIN_SLOPE) {
             return this.runNewtonRaphsonIterate(x, tPossible);
         }
         // 斜率为0，表示x对t不变，那么意味着这里贝塞尔曲线坡度很陡(即dy/dt或者dy/dx很大，为啥？因为曲线总归得
@@ -167,7 +167,7 @@ define(function(require) {
      * 牛顿拉普生迭代计算t值
      */
     Bezier.prototype.runNewtonRaphsonIterate = function(x, tPossible) {
-        for (var i = 0; i < Bezier.const.NEWTON_ITERATIONS; i++) {
+        for (var i = 0; i < Bezier.consts.NEWTON_ITERATIONS; i++) {
             var derivative = this.getDerivativeFromT(tPossible);
             if (derivative.x == 0) {
                 return tPossible;
@@ -185,10 +185,10 @@ define(function(require) {
      */
     Bezier.prototype.runBinarySubdivide = function(x, tStart, tEnd) {
         var tPossible;
-        for (var i = 0; i < Bezier.const.SUBDIVISION_MAX_ITERATIONS; i++) {
+        for (var i = 0; i < Bezier.consts.SUBDIVISION_MAX_ITERATIONS; i++) {
             tPossible = tStart + (tEnd - tStart) / 2.0;
-            dx = this.getFromT(tPossible).x - x;
-            if (dx <= Bezier.const.SUBDIVISION_PRECISION) {
+            var dx = this.getFromT(tPossible).x - x;
+            if (dx <= Bezier.consts.SUBDIVISION_PRECISION) {
                 return tPossible;
             }
             else if (dx > 0) {

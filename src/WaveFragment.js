@@ -19,7 +19,7 @@ define(function(require) {
         /**
          * Math.pow(p, 2).
          * http://jsperf.com/math-pow-vs-simple-multiplication
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'Quad': function (p) {
@@ -27,7 +27,7 @@ define(function(require) {
         },
         /**
          * Math.pow(p, 3).
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'Cubic': function (p) {
@@ -35,7 +35,7 @@ define(function(require) {
         },
         /**
          * Math.pow(p, 4).
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'Quart': function (p) {
@@ -43,7 +43,7 @@ define(function(require) {
         },
         /**
          * Math.pow(p, 5).
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'Qunit': function (p) {
@@ -51,7 +51,7 @@ define(function(require) {
         },
         /**
          * Math.pow(p, 6).
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'Expo': function (p) {
@@ -59,7 +59,7 @@ define(function(require) {
         },
         /**
          * Sine wave.
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'Sine': function (p) {
@@ -67,7 +67,7 @@ define(function(require) {
         },
         /**
          * 1/4 circle.
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'Circ': function (p) {
@@ -75,7 +75,7 @@ define(function(require) {
         },
         /**
          * come back a little then return.
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'Back': function (p) {
@@ -83,7 +83,7 @@ define(function(require) {
         },
         /**
          * Elastic
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'Elastic': function (p) {
@@ -92,7 +92,7 @@ define(function(require) {
         },
         /**
          * Bounce effect: like a ball.
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'Bounce': function (p) {
@@ -106,12 +106,7 @@ define(function(require) {
 
     var Bezier = require('./Bezier');
     var fastInCurves = {
-        'B2ToLinear': (function() {
-            var easing = new Bezier(0, 0.4, 0.2, 0.4, 0.4, 0.55).getEasing();
-            return function(p) {
-                return easing(p);
-            }
-        })()
+        'B2ToLinear': new Bezier(0, 0.4, 0.2, 0.4, 0.4, 0.55).getEasing()
     };
 
     return {

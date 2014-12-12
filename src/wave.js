@@ -20,7 +20,7 @@ define(function(require) {
     var Easings = {
         /**
          * linear easing function.
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'linear': function (p) {
@@ -29,7 +29,7 @@ define(function(require) {
 
         /**
          * no animation.
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'none': function (p) {
@@ -38,7 +38,7 @@ define(function(require) {
 
         /**
          * no animation and enter the end statue immediately.
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'full': function (p) {
@@ -47,7 +47,7 @@ define(function(require) {
 
         /**
          * reverse animation.
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'reverse': function (p) {
@@ -57,7 +57,7 @@ define(function(require) {
         /**
          * jquery swing easing function.
          * https://github.com/jquery/jquery/blob/10399ddcf8a239acc27bdec9231b996b178224d3/src/effects/Tween.js#L106
-         * @param {number} percent
+         * @param {number} p percent
          * @return {number} new percent value.
          */
         'swing': function (p) {
@@ -132,7 +132,7 @@ define(function(require) {
 
     /**
      * wave generator
-     * @param {string|Array.<number>} value Easing name or bezier points
+     * @param {Function|string|Array.<number>} value Easing name or bezier points
      * @return {?Function}
      */
     function wave(value) {
@@ -141,6 +141,9 @@ define(function(require) {
         }
         else if (Object.prototype.toString.call(value) === '[object Array]') {
             return new Bezier(value).getEasing();
+        }
+        else if (Object.prototype.toString.call(value) === '[object Function]') {
+            return /** @type {Function} */(value);
         }
         else {
             return null;
@@ -153,17 +156,12 @@ define(function(require) {
      * @param {Function|string|Array.<number>} value Wave function or something to generate one
      */
     wave.register = function(name, value) {
-        if (Object.prototype.toString.call(value) === '[object Function]') {
-            Easings[name] = value;
+        var easing = wave(value);
+        if (easing) {
+            Easings[name] = easing;
         }
         else {
-            var easing = wave(value);
-            if (easing) {
-                Easings[name] = easing;
-            }
-            else {
-                throw 'unregisterable';
-            }
+            throw 'unregisterable';
         }
     };
 

@@ -19,9 +19,9 @@ define(function(require) {
     return {
         /**
          * repeat easing function.
-         * @param {function<number>} easing
+         * @param {function(number)} easing
          * @param {number} repeatCount
-         * @return {function<number>} new easing function
+         * @return {function(number)} new easing function
          */
         repeat: function (easing, repeatCount) {
             var stepCount = repeatCount * 2 - 1;
@@ -41,8 +41,8 @@ define(function(require) {
         },
         /**
          * reverse easing function.
-         * @param {function<number>} easing
-         * @return {function<number>} new easing function
+         * @param {function(number)} easing
+         * @return {function(number)} new easing function
          */
         reverse: function (easing) {
             return function (p) {
@@ -51,8 +51,8 @@ define(function(require) {
         },
         /**
          * reflect easing function.
-         * @param {function<number>} easing
-         * @return {function<number>} new easing function
+         * @param {function(number)} easing
+         * @return {function(number)} new easing function
          */
         reflect: function (easing) {
             return function (p) {

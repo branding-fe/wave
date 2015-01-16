@@ -14,41 +14,26 @@
  * date:    $Date: 2014/09/14 19:11:26$
  */
 
-var child_process = require('child_process');
-child_process.exec('node node_modules/edp/lib/cli build -f', function(err, stdout, stderr) {
-    console.log(stdout);
-    console.log(stderr);
-    clean();
-});
-
 var fs = require('fs');
-var amdclean = require('amdclean');
-function clean() {
-    var code = fs.readFileSync(__dirname + '/output/asset/wave.js', 'utf-8');
-    code = code.replace(/,define\(/g, ';define(');
-    var cleanedCode = amdclean.clean({
-        'code': code,
-        'wrap': {
-            'start': '',
-            'end': ''
-        }
-    });
-    fs.writeFileSync(
-        __dirname + '/dist/wave.js',
-        ';window.brandingfe = window.brandingfe || {};\n(function() {\n'
-            + cleanedCode
-            + 'window.brandingfe.wave = wave;\n})();\n'
-    );
+var child_process = require('child_process');
 
-    fs.writeFileSync(
-        __dirname + '/dist/wave.gcc.js',
-        'goog.provide(\'brandingfe.wave\');\n(function() {\n'
-            + cleanedCode
-            + 'brandingfe.wave = wave;\n})();\n'
-    );
+function merge() {
+    var code = fs.readFileSync(__dirname + '/build/wrap/start.js', 'utf-8')
+        + fs.readFileSync(__dirname + '/build/wrap/almond.js', 'utf-8')
+        + fs.readFileSync(__dirname + '/output/asset/Wave.js', 'utf-8')
+        + fs.readFileSync(__dirname + '/build/wrap/end.js', 'utf-8');
+
+    fs.writeFileSync(__dirname + '/dist/wave.js', code);
 }
 
-clean();
+child_process.exec('node node_modules/edp/bin/edp-cli build -f', function(err, stdout, stderr) {
+    console.log();
+    console.log(stdout);
+    console.log(stderr);
+    merge();
+});
+
+
 
 
 

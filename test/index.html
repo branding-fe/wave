@@ -12,15 +12,15 @@
 <canvas id="canvas">浏览器不支持 canvas 标签</canvas>
 <script type="text/javascript">
 require.config({
-    baseUrl: 'src'
+    baseUrl: '../src'
 });
-require(['wave'], function(wave) {
+require(['Wave'], function(Wave) {
     // usage:
-    // wave('easeInCubic');
-    // wave('ease-in');
-    // wave([0, 1]);
-    // wave([.54, .15, .42, .83]);
-    // wave.register('fast-in', function(x) {});
+    // Wave('easeInCubic');
+    // Wave('ease-in');
+    // Wave([0, 1]);
+    // Wave([.54, .15, .42, .83]);
+    // Wave.register('fast-in', function(x) {});
 
     var boardWidth = 160;
     var boardHeight = 160;
@@ -31,7 +31,7 @@ require(['wave'], function(wave) {
     var itemWidth = boardWidth + padding * 2 + margin * 2;
     var itemHeight = boardHeight + padding * 2 + margin * 2 + titleLineHeight + barLineHeight;
     var canvas = document.getElementById('canvas');
-    var map = wave.getMap();
+    var map = Wave.getMap();
     var total = 0;
     var easeNames = [];
     for (var name in map) {

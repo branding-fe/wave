@@ -1,28 +1,36 @@
 {
-  "name": "wave",
-  "version": "1.0.0",
-  "description": "Timing Function for Animation",
-  "main": "index.js",
-  "dependencies": {
-    "amdclean": "^2.2.5",
-    "edp-build": "^1.0.14"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "build": "node build.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/branding-fe/wave.git"
-  },
-  "keywords": [
-    "timing",
-    "function"
-  ],
-  "author": "zmmbreeze,osdream",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/branding-fe/wave/issues"
-  },
-  "homepage": "https://github.com/branding-fe/wave"
+    "name": "wave",
+    "version": "0.0.1",
+    "description": "Timing Function for Animation",
+    "main": "index.js",
+    "dependencies": {
+        "edp": "*",
+        "edp-build": "*"
+    },
+    "scripts": {
+        "build": "node build.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/branding-fe/wave.git"
+    },
+    "keywords": [
+        "dance",
+        "animation",
+        "JavaScript"
+    ],
+    "author": "osdream,zmmbreeze",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/branding-fe/dance/issues"
+    },
+    "homepage": "https://github.com/branding-fe/dance",
+    "edp": {
+        "wwwroot": "/",
+        "depDir": "dep",
+        "srcDir": "src",
+        "loaderAutoConfig": "js,htm,html,tpl,vm,phtml",
+        "loaderUrl": "http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js",
+        "dependencies": {}
+    }
 }

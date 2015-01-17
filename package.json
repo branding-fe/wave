@@ -1,11 +1,12 @@
 {
     "name": "wave",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "Timing Function for Animation",
     "main": "index.js",
     "dependencies": {
-        "edp": "*",
-        "edp-build": "*"
+        "edp": "~1.1.0",
+        "edp-build": "~1.0.14",
+        "uglify-js": "~2.4.16"
     },
     "scripts": {
         "build": "node build.js"
@@ -15,16 +16,15 @@
         "url": "https://github.com/branding-fe/wave.git"
     },
     "keywords": [
-        "dance",
-        "animation",
-        "JavaScript"
+        "wave",
+        "timing function"
     ],
     "author": "osdream,zmmbreeze",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/branding-fe/dance/issues"
+        "url": "https://github.com/branding-fe/wave/issues"
     },
-    "homepage": "https://github.com/branding-fe/dance",
+    "homepage": "https://github.com/branding-fe/wave",
     "edp": {
         "wwwroot": "/",
         "depDir": "dep",

@@ -1,7 +1,9 @@
 Wave
 ==========
 
-The JavaScript animation timing function framework. See the demo: http://branding-fe.github.io/wave/
+The JavaScript animation timing function framework.
+
+See the demo: http://branding-fe.github.io/wave/
 
 ## Usage
 

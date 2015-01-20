@@ -132,10 +132,36 @@ define(function(require) {
 
     /**
      * wave generator
+     * @constructor
      * @param {Function|string|Array.<number>} value Easing name or bezier points
      * @return {?Function}
      */
-    function wave(value) {
+    function Wave(value) {
+        if (!(this instanceof Wave)) {
+            return Wave.make(value);
+        }
+
+        /**
+         * wave input
+         * @type {*}
+         */
+        this.value = value;
+
+        /**
+         * the easing function
+         * @type {Function}
+         */
+        this.easing;
+    }
+
+    Wave.prototype.getEasing = function() {
+        if (!this.easing) {
+            this.easing = Wave.make(this.value);
+        }
+        return this.easing;
+    };
+
+    Wave.make = function(value) {
         if (Object.prototype.toString.call(value) === '[object String]') {
             return Easings[value] || null;
         }
@@ -148,14 +174,14 @@ define(function(require) {
         else {
             return null;
         }
-    }
+    };
 
     /**
      * register a wave
      * @param {string} name wave name
      * @param {Function|string|Array.<number>} value Wave function or something to generate one
      */
-    wave.register = function(name, value) {
+    Wave.register = function(name, value) {
         var easing = wave(value);
         if (easing) {
             Easings[name] = easing;
@@ -169,11 +195,11 @@ define(function(require) {
      * get the map of all wave
      * @return {Object.<string, Function>};
      */
-    wave.getMap = function() {
+    Wave.getMap = function() {
         return Easings;
     };
 
-    return wave;
+    return Wave;
 });
 
 

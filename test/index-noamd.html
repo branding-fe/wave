@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Wave - The Javascript animation easing functions.</title>
     <script type="text/javascript" src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+    <script type="text/javascript" src="../dist/wave.latest.min.js"></script>
     <style type="text/css">
     body {padding:0;margin:0;}
     </style>
@@ -11,16 +12,13 @@
 <body>
 <canvas id="canvas">浏览器不支持 canvas 标签</canvas>
 <script type="text/javascript">
-require.config({
-    baseUrl: 'src'
-});
-require(['wave'], function(wave) {
+(function() {
     // usage:
-    // wave('easeInCubic');
-    // wave('ease-in');
-    // wave([0, 1]);
-    // wave([.54, .15, .42, .83]);
-    // wave.register('fast-in', function(x) {});
+    // Wave('easeInCubic');
+    // Wave('ease-in');
+    // Wave([0, 1]);
+    // Wave([.54, .15, .42, .83]);
+    // Wave.register('fast-in', function(x) {});
 
     var boardWidth = 160;
     var boardHeight = 160;
@@ -31,7 +29,7 @@ require(['wave'], function(wave) {
     var itemWidth = boardWidth + padding * 2 + margin * 2;
     var itemHeight = boardHeight + padding * 2 + margin * 2 + titleLineHeight + barLineHeight;
     var canvas = document.getElementById('canvas');
-    var map = wave.getMap();
+    var map = Wave.getMap();
     var total = 0;
     var easeNames = [];
     for (var name in map) {
@@ -99,7 +97,7 @@ require(['wave'], function(wave) {
         run();
     }
     animation();
-});
+})();
 </script>
 </body>
 </html>

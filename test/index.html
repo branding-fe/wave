@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Wave - The Javascript animation easing functions.</title>
+    <script type="text/javascript" src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+    <style type="text/css">
+    body {padding:0;margin:0;}
+    </style>
+</head>
+<body>
+<canvas id="canvas">浏览器不支持 canvas 标签</canvas>
+<script type="text/javascript">
+require.config({
+    baseUrl: '../src'
+});
+require(['Wave'], function(Wave) {
+    // usage:
+    // Wave('easeInCubic');
+    // Wave('ease-in');
+    // Wave([0, 1]);
+    // Wave([.54, .15, .42, .83]);
+    // Wave.register('fast-in', function(x) {});
+
+    var boardWidth = 160;
+    var boardHeight = 160;
+    var padding = 60;
+    var margin = 40;
+    var titleLineHeight = 30;
+    var barLineHeight = 30;
+    var itemWidth = boardWidth + padding * 2 + margin * 2;
+    var itemHeight = boardHeight + padding * 2 + margin * 2 + titleLineHeight + barLineHeight;
+    var canvas = document.getElementById('canvas');
+    var map = Wave.getMap();
+    var total = 0;
+    var easeNames = [];
+    for (var name in map) {
+        easeNames.push(name);
+        total++;
+    }
+    var width = document.body.offsetWidth - 20;
+    canvas.width = width;
+    var itemPerRow = parseInt(width / itemWidth, 10);
+    var height = itemHeight * Math.ceil(total / itemPerRow);
+    canvas.height = height;
+
+    var ctx = canvas.getContext('2d');
+    ctx.strokeStyle = '#336699';
+    ctx.fillStyle = '#336699';
+    ctx.font = '20px Arial';
+    for (var i = 0; i < easeNames.length; i++) {
+        var name = easeNames[i];
+        var easing = map[name];
+        var topIndex = parseInt(i / itemPerRow, 10);
+        var leftIndex = i % itemPerRow;
+        var left = leftIndex * itemWidth + padding + margin;
+        var top = topIndex * itemHeight + padding + margin + titleLineHeight;
+        ctx.fillText(name, left, top - padding);
+        ctx.beginPath();
+        ctx.moveTo(left, top + boardHeight);
+        for (var x = 0; x <= 100; x++) {
+            var y = easing(x / 100);
+            ctx.lineTo(left + x * (boardWidth / 100), top + boardHeight - y * boardHeight);
+        }
+        ctx.stroke();
+    }
+
+    var duration = 2000;
+    var direction = true;
+    function render(p) {
+        for (var i = 0; i < easeNames.length; i++) {
+            var name = easeNames[i];
+            var easing = map[name];
+            var topIndex = parseInt(i / itemPerRow, 10);
+            var leftIndex = i % itemPerRow;
+            var left = leftIndex * itemWidth + padding + margin;
+            var top = topIndex * itemHeight + padding + margin + titleLineHeight;
+            // clear more area
+            ctx.clearRect(left - padding, top + boardHeight + padding, boardWidth + 2 * padding, barLineHeight);
+            ctx.fillStyle = '#336699';
+            ctx.fillRect(left + easing(p) * (boardWidth - barLineHeight), top + boardHeight + padding, barLineHeight, barLineHeight);
+        }
+    }
+    function animation() {
+        var start = Date.now();
+        function run() {
+            var p = (Date.now() - start) / duration;
+            if (p > 1) {
+                render(1);
+                direction = !direction;
+                start = Date.now();
+                requestAnimationFrame(run);
+            }
+            else {
+                render(p);
+                requestAnimationFrame(run);
+            }
+        }
+        run();
+    }
+    animation();
+});
+</script>
+</body>
+</html>

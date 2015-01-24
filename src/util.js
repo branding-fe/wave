@@ -1,11 +1,13 @@
 /***************************************************************************
- * 
+ *
  * Copyright (c) 2014 Baidu.com, Inc. All Rights Reserved
  * $Id$
- * 
+ * @author:  zmmbreeze(zmmbreeze0825@gmail.com), songao(songao@baidu.com)
+ * @file:    src/util.js
+ *
  **************************************************************************/
- 
- 
+
+
 /*
  * path:    src/util.js
  * desc:    all kinds of timing function
@@ -15,12 +17,12 @@
  */
 
 
-define(function(require) {
+define(function (require) {
     return {
         /**
          * repeat easing function.
-         * @param {function(number)} easing
-         * @param {number} repeatCount
+         * @param {function(number)} easing input easing function
+         * @param {number} repeatCount repeat count.
          * @return {function(number)} new easing function
          */
         repeat: function (easing, repeatCount) {
@@ -41,7 +43,7 @@ define(function(require) {
         },
         /**
          * reverse easing function.
-         * @param {function(number)} easing
+         * @param {function(number)} easing input easing function
          * @return {function(number)} new easing function
          */
         reverse: function (easing) {
@@ -51,7 +53,7 @@ define(function(require) {
         },
         /**
          * reflect easing function.
-         * @param {function(number)} easing
+         * @param {function(number)} easing input easing function
          * @return {function(number)} new easing function
          */
         reflect: function (easing) {

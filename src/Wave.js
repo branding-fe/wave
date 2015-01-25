@@ -2,19 +2,16 @@
  *
  * Copyright (c) 2014 Baidu.com, Inc. All Rights Reserved
  * $Id$
- * @author:  songao(songao@baidu.com)
+ *
  * @file:    src/wave.js
+ * @author:  songao(songao@baidu.com)
+ * @version: $Revision$
+ * @date:    $Date: 2014/08/25 08:34:27$
+ * @desc:    all kinds of timing function
  *
  **************************************************************************/
 
-
-/*
- * path:    src/wave.js
- * desc:    all kinds of timing function
- * author:  songao(songao@baidu.com)
- * version: $Revision$
- * date:    $Date: 2014/08/25 08:34:27$
- */
+/* eslint-disable dot-notation */
 
 define(function (require) {
     var Bezier = require('./Bezier');

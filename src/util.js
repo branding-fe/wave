@@ -2,19 +2,14 @@
  *
  * Copyright (c) 2014 Baidu.com, Inc. All Rights Reserved
  * $Id$
- * @author:  zmmbreeze(zmmbreeze0825@gmail.com), songao(songao@baidu.com)
+ *
  * @file:    src/util.js
+ * @author:  zmmbreeze(zmmbreeze0825@gmail.com), songao(songao@baidu.com)
+ * @version: $Revision$
+ * @date:    $Date: 2014/08/25 08:34:27$
+ * @desc:    all kinds of timing function
  *
  **************************************************************************/
-
-
-/*
- * path:    src/util.js
- * desc:    all kinds of timing function
- * author:  zmmbreeze(zmmbreeze0825@gmail.com), songao(songao@baidu.com)
- * version: $Revision$
- * date:    $Date: 2014/08/25 08:34:27$
- */
 
 
 define(function (require) {

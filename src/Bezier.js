@@ -2,19 +2,15 @@
  *
  * Copyright (c) 2014 Baidu.com, Inc. All Rights Reserved
  * $Id$
- * @author:  songao(songao@baidu.com)
+ *
  * @file:    src/Bezier.js
+ * @author:  songao(songao@baidu.com)
+ * @version: $Revision$
+ * @date:    $Date: 2014/08/23 19:59:31$
+ * @desc:    the bezier function
  *
  **************************************************************************/
 
-
-/*
- * path:    src/Bezier.js
- * desc:    the bezier function
- * author:  songao(songao@baidu.com)
- * version: $Revision$
- * date:    $Date: 2014/08/23 19:59:31$
- */
 
 define(function (require) {
     /**

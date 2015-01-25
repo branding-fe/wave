@@ -1,7 +1,23 @@
+/***************************************************************************
+ *
+ * Copyright (c) 2014 Baidu.com, Inc. All Rights Reserved
+ * $Id$
+ *
+ * @file:    edp-build-config.js
+ * @author:  songao(songao@baidu.com)
+ * @version: $Revision$
+ * @date:    $Date: 2014/09/14 19:11:26$
+ * @desc:    edp build 配置
+ *
+ **************************************************************************/
+
+/* eslint-env node */
+/* global LessCompiler, CssCompressor, ModuleCompiler, JsCompressor, PathMapper, AddCopyright */
+
 exports.input = __dirname;
 
-var path = require( 'path' );
-exports.output = path.resolve( __dirname, 'output' );
+var path = require('path');
+exports.output = path.resolve(__dirname, 'output');
 
 exports.getProcessors = function () {
     var lessProcessor = new LessCompiler();
@@ -12,7 +28,7 @@ exports.getProcessors = function () {
     var addCopyright = new AddCopyright();
 
     return {
-        'default': [ lessProcessor, moduleProcessor, pathMapperProcessor ],
+        'default': [lessProcessor, moduleProcessor, pathMapperProcessor],
         'release': [
             lessProcessor, cssProcessor, moduleProcessor,
             jsProcessor, pathMapperProcessor, addCopyright
@@ -50,9 +66,11 @@ exports.exclude = [
     '*.swp'
 ];
 
-exports.injectProcessor = function ( processors ) {
-    for ( var key in processors ) {
-        global[ key ] = processors[ key ];
+exports.injectProcessor = function (processors) {
+    for (var key in processors) {
+        if (processors.hasOwnProperty(key)) {
+            global[key] = processors[key];
+        }
     }
 };
 

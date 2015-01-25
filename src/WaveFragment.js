@@ -2,19 +2,15 @@
  *
  * Copyright (c) 2014 Baidu.com, Inc. All Rights Reserved
  * $Id$
- * @author:  zmmbreeze(zmmbreeze0825@gmail.com), songao(songao@baidu.com)
+ *
  * @file:    src/WaveFragment.js
+ * @author:  zmmbreeze(zmmbreeze0825@gmail.com), songao(songao@baidu.com)
+ * @version: $Revision$
+ * @date:    $Date: 2014/08/25 12:23:55$
+ * @desc:    Wave Fragments
  *
  **************************************************************************/
 
-
-/*
- * path:    src/WaveFragment.js
- * desc:    Wave Fragments
- * author:  zmmbreeze(zmmbreeze0825@gmail.com), songao(songao@baidu.com)
- * version: $Revision$
- * date:    $Date: 2014/08/25 12:23:55$
- */
 
 define(function (require) {
     var easeInCurves = {

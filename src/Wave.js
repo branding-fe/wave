@@ -15,6 +15,7 @@
 
 define(function (require) {
     var Bezier = require('./Bezier');
+    var WaveGenerator = require('./WaveGenerator');
 
     var Easings = {
         /**
@@ -142,11 +143,12 @@ define(function (require) {
      * wave generator
      * @constructor
      * @param {Function|string|Array.<number>} value Easing name or bezier points
+     * @param {...*} varArgs extra parameters
      * @return {?Function}
      */
-    function Wave(value) {
+    function Wave(value, varArgs) {
         if (!(this instanceof Wave)) {
-            return Wave.make(value);
+            return Wave.make.apply(Wave, arguments);
         }
 
         /**
@@ -162,6 +164,10 @@ define(function (require) {
         this.easing;
     }
 
+    /**
+     * 获取 Ease Function
+     * @return {Function}
+     */
     Wave.prototype.getEasing = function () {
         if (!this.easing) {
             this.easing = Wave.make(this.value);
@@ -169,9 +175,22 @@ define(function (require) {
         return this.easing;
     };
 
-    Wave.make = function (value) {
+    /**
+     * make a wave
+     * @param {string|Array.<number>|Function} value input
+     * @param {...*} varArgs extra parameters
+     * @return {?Function}
+     */
+    Wave.make = function (value, varArgs) {
         if (Object.prototype.toString.call(value) === '[object String]') {
-            return Easings[value] || null;
+            if (Easings[value]) {
+                return Easings[value];
+            }
+            var maker = WaveGenerator[value];
+            if (maker) {
+                return maker.apply(null, Array.prototype.slice.call(arguments, 1));
+            }
+            return null;
         }
         else if (Object.prototype.toString.call(value) === '[object Array]') {
             return new Bezier(value).getEasing();

@@ -22,6 +22,11 @@
     // Wave([.54, .15, .42, .83]);
     // Wave.register('fast-in', function(x) {});
 
+    Wave.register('acceleration(a=1)', Wave('Acceleration', 1));
+    Wave.register('acceleration(a=2)', Wave('Acceleration', 2));
+    Wave.register('acceleration(a=4)', Wave('Acceleration', 4));
+    Wave.register('acceleration(a=5)', Wave('Acceleration', 5));
+
     var boardWidth = 160;
     var boardHeight = 160;
     var padding = 60;

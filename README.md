@@ -1,7 +1,9 @@
 Wave
 ==========
 
-The JavaScript animation timing function framework. See the demo: http://branding-fe.github.io/wave/
+The JavaScript animation timing function framework.
+
+See the demo: http://branding-fe.github.io/wave/
 
 ## Usage
 
@@ -27,6 +29,6 @@ You can also register your own named easing function
 
 ```javascript
 wave.register('fast-in', function(x) {
-    return 1.2 * x;
+    return Math.min(1.2 * x, 1);
 });
 ```

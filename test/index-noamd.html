@@ -12,11 +12,9 @@
 <body>
 <canvas id="canvas">浏览器不支持 canvas 标签</canvas>
 <script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+<script src="../dist/wave.latest.min.js"></script>
 <script>
-require.config({
-    baseUrl: '../src'
-});
-require(['Wave'], function(Wave) {
+(function() {
     // usage:
     // Wave('easeInCubic');
     // Wave('ease-in');
@@ -106,7 +104,7 @@ require(['Wave'], function(Wave) {
         run();
     }
     animation();
-});
+})();
 </script>
 </body>
 </html>

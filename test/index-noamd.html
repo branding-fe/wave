@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
     <title>Wave - The Javascript animation easing functions.</title>
-    <script type="text/javascript" src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
-    <script type="text/javascript" src="../dist/wave.latest.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="viewport" content="width=device-width, height=device-height, inital-scale=1.0, maximum-scale=1.0, user-scalable=no;">
     <style type="text/css">
     body {padding:0;margin:0;}
     </style>
 </head>
 <body>
 <canvas id="canvas">浏览器不支持 canvas 标签</canvas>
-<script type="text/javascript">
+<script src="http://s1.bdstatic.com/r/www/cache/ecom/esl/1-8-2/esl.js"></script>
+<script src="../dist/wave.latest.min.js"></script>
+<script>
 (function() {
     // usage:
     // Wave('easeInCubic');
@@ -19,6 +21,11 @@
     // Wave([0, 1]);
     // Wave([.54, .15, .42, .83]);
     // Wave.register('fast-in', function(x) {});
+
+    Wave.register('acceleration(a=1)', Wave('Acceleration', 1));
+    Wave.register('acceleration(a=2)', Wave('Acceleration', 2));
+    Wave.register('acceleration(a=4)', Wave('Acceleration', 4));
+    Wave.register('acceleration(a=5)', Wave('Acceleration', 5));
 
     var boardWidth = 160;
     var boardHeight = 160;

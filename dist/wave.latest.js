@@ -405,7 +405,7 @@ var requirejs, require, define;
     };
 }());
 define('Bezier', ['require'], function (require) {
-    function Bezier(var_args) {
+    function Bezier(varArgs) {
         var args = [].slice.call(arguments, 0);
         if (Object.prototype.toString.call(args[0]) === '[object Array]') {
             args = args[0];
@@ -466,21 +466,19 @@ define('Bezier', ['require'], function (require) {
         var derivative = this.getDerivativeFromT(tPossible);
         if (derivative.x >= Bezier.consts.NEWTON_MIN_SLOPE) {
             return this.runNewtonRaphsonIterate(x, tPossible);
-        } else if (derivative.x == 0) {
+        } else if (derivative.x === 0) {
             return tPossible;
-        } else {
-            return this.runBinarySubdivide(x, tStart, tStart + this.splineInterval);
         }
+        return this.runBinarySubdivide(x, tStart, tStart + this.splineInterval);
     };
     Bezier.prototype.runNewtonRaphsonIterate = function (x, tPossible) {
         for (var i = 0; i < Bezier.consts.NEWTON_ITERATIONS; i++) {
             var derivative = this.getDerivativeFromT(tPossible);
-            if (derivative.x == 0) {
+            if (derivative.x === 0) {
                 return tPossible;
-            } else {
-                var dx = this.getFromT(tPossible).x - x;
-                tPossible -= dx / derivative.x;
             }
+            var dx = this.getFromT(tPossible).x - x;
+            tPossible -= dx / derivative.x;
         }
         return tPossible;
     };
@@ -541,10 +539,9 @@ define('Bezier', ['require'], function (require) {
         }
         if (n === 0) {
             return 1;
-        } else {
-            this.factorialCache[n] = n * this.getFactorial(n - 1);
-            return this.factorialCache[n];
         }
+        this.factorialCache[n] = n * this.getFactorial(n - 1);
+        return this.factorialCache[n];
     };
     Bezier.prototype.getDerivativeFromT = function (t) {
         var coeffs = this.getCoefficients();
@@ -561,14 +558,14 @@ define('Bezier', ['require'], function (require) {
         };
     };
     Bezier.prototype.getSamples = function (count) {
-        if (this.sampleCache[count]) {
-            return this.sampleCache[count];
-        }
         var samples = [];
-        for (var i = 0; i < count; i++) {
-            samples.push(this.get(i / (count - 1)));
+        if (!this.sampleCache[count]) {
+            for (var i = 0; i < count; i++) {
+                samples.push(this.get(i / (count - 1)));
+            }
+            this.sampleCache[count] = samples;
         }
-        this.sampleCache[count] = samples;
+        return this.sampleCache[count];
     };
     Bezier.prototype.getEasing = function () {
         var me = this;
@@ -685,20 +682,26 @@ define('Wave', [
     var WaveFragment = require('./WaveFragment');
     var util = require('./util');
     var easeInCurves = WaveFragment['easeInCurves'];
-    for (var name in easeInCurves) {
-        var fragment = easeInCurves[name];
-        Easings['easeIn' + name] = fragment;
-        Easings['easeOut' + name] = util.reverse(fragment);
-        Easings['easeInOut' + name] = util.reflect(fragment);
-        Easings['easeOutIn' + name] = util.reflect(util.reverse(fragment));
+    var name;
+    var fragment;
+    for (name in easeInCurves) {
+        if (easeInCurves.hasOwnProperty(name)) {
+            fragment = easeInCurves[name];
+            Easings['easeIn' + name] = fragment;
+            Easings['easeOut' + name] = util.reverse(fragment);
+            Easings['easeInOut' + name] = util.reflect(fragment);
+            Easings['easeOutIn' + name] = util.reflect(util.reverse(fragment));
+        }
     }
     var fastInCurves = WaveFragment['fastInCurves'];
-    for (var name in fastInCurves) {
-        var fragment = fastInCurves[name];
-        Easings['fastIn' + name] = fragment;
-        Easings['fastOut' + name] = util.reverse(fragment);
-        Easings['fastInOut' + name] = util.reflect(fragment);
-        Easings['fastOutIn' + name] = util.reflect(util.reverse(fragment));
+    for (name in fastInCurves) {
+        if (fastInCurves.hasOwnProperty(name)) {
+            fragment = fastInCurves[name];
+            Easings['fastIn' + name] = fragment;
+            Easings['fastOut' + name] = util.reverse(fragment);
+            Easings['fastInOut' + name] = util.reflect(fragment);
+            Easings['fastOutIn' + name] = util.reflect(util.reverse(fragment));
+        }
     }
     var easingBezierMap = {
             'ease': [
@@ -726,8 +729,10 @@ define('Wave', [
                 1
             ]
         };
-    for (var name in easingBezierMap) {
-        Easings[name] = new Bezier(easingBezierMap[name]).getEasing();
+    for (name in easingBezierMap) {
+        if (easingBezierMap.hasOwnProperty(name)) {
+            Easings[name] = new Bezier(easingBezierMap[name]).getEasing();
+        }
     }
     function Wave(value) {
         if (!(this instanceof Wave)) {
@@ -749,12 +754,11 @@ define('Wave', [
             return new Bezier(value).getEasing();
         } else if (Object.prototype.toString.call(value) === '[object Function]') {
             return value;
-        } else {
-            return null;
         }
+        return null;
     };
     Wave.register = function (name, value) {
-        var easing = wave(value);
+        var easing = new Wave(value).getEasing();
         if (easing) {
             Easings[name] = easing;
         } else {
